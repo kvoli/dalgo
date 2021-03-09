@@ -1,0 +1,142 @@
+
+
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+\renewcommand*{\bibfont}{\footnotesize}
+
+\usepackage{parskip}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+{\sc The University of Melbourne
+\\
+School of Computing and Information Systems
+\\ 
+COMP90020 Distributed Algorithms}
+\bigskip \\
+{\Large\bf Tutorial Week 4: Global States}
+\end{center}
+\section*{Solutions}
+
+\setcounter{question}{9}
+
+\question{
+
+\begin{itemize}
+    \item \textbf{LC1:} $L_i$ is incremented before each event is issued at process $p_i$, $L_i := L_i+1$
+    \item \textbf{LC2:} 
+    \begin{enumerate}[(a)]
+        \item When a process $p_i$ sends a message $m_i$, it piggybacks on $m$ the value $t = L_i$
+        \item On receiving ($m,t$), a process $p_j$ computes $L_j := max(L_j, t)$ and then applies \textbf{LC1} before time stamping the event \textit{receive(m)}
+    \end{enumerate} 
+\end{itemize}
+
+\begin{itemize}
+    \item $p_0$ = $(s_1=1, s_2=2, r_5 = 5)$
+    \item $p_1$ = $(r_2=3, s_5=4)$
+    \item $p_2$ = $(r_1=2, a=3, s_4=4, r_3=5, r_6=8)$
+    \item $p_3$ = $(s_3=1, r_4=5, b=6, s_6=7)$
+\end{itemize}
+}
+
+\question{
+Concurrent events aren't related by $a \rightarrow b$ or $b \rightarrow a$. We use $a || b$ to denote concurrent events. In the above example, $L(s_3) < L(a)$ whilst $s_3 || a$.
+}
+
+\question{
+
+\begin{itemize}
+    \item Consider $e$ and $e'$ are successive events in the same process (LC1) or related to by $e = send(m)$ and $e' = recv(m)$ (LC2), then it must be the case that $L(e) < L(e')$. \textbf{(1)}
+    \item Now assume $e_i \rightarrow e_j \Rightarrow L(e_i) < L(e_j)$ for all connected pairs of events $i,j$ where $i<j$ in a sequence of length $N$ or less. Following, $e$ and $e'$ are connected by a chain of events $e_1,e_2,...,e_{N+1}$ at $m \geq 1$ processes such that $e = e_1$ and $e' = e_{N+1}$. Then it must be the case that $e \rightarrow e_N$, so $L(e) < L(e_N)$ by the induction hypothesis. Then by (LC1) and (LC2), $L(e_N) < L(e')$. Therefore by the transitive property, $L(e) < L(e_N) < L(e'), \forall N>1$. \textbf{(2)}.
+\end{itemize}
+Combining \textbf{(1)} and \textbf{(2)}: $e \rightarrow e' \Rightarrow L(e) < L(e')$.
+}
+
+\question{
+\begin{itemize}
+    \item \textbf{VC1:} Initially, $V_i[j] = 0$ for $i,j = 1,2,...,N$.
+    \item \textbf{VC2:} Just before $p_i$ timestamps an event, it sets $V_i[i] := V_i[i]+1$.
+    \item \textbf{VC3:} $p_i$ includes the value $t = V_i$ in every message it sends.
+    \item \textbf{VC4:} When $p_i$ receives a timestamp t in a message, it sets $V_i[j] := max(V_i[j], t[j])$ for $j = 1,2,...,N$. Taking the component wise maximum of the two vector timestamps.
+\end{itemize}
+
+\begin{itemize}
+    \item $p_0$ = $(s_1=[1,0,0,0], s_2=[2,0,0,0], r_5 = [3,2,0,0])$
+    \item $p_1$ = $(r_2=[2,1,0,0], s_5=[2,2,0,0])$
+    \item $p_2$ = $(r_1=[1,0,1,0], a=[1,0,2,0], s_4=[1,0,3,0], r_3=[1,0,4,1], r_6=[1,0,5,4])$
+    \item $p_3$ = $(s_3=[0,0,0,1], r_4=[1,0,3,2], b=[1,0,3,3], s_6=[1,0,3,4])$
+\end{itemize}
+}
+
+\question{Consider:
+\begin{itemize}
+    \item Initially by VC1, $V_i[j]=0$ for $i,j = 1,2,...,N$, therefore $V_j[i] \leq V_i[i]$
+    \item Then by VC2, $p_i$ is the source of any increment to $V[i]$. This occurs before timestamping any event. $p_j$ increments $V_j[i]$ only as it receives messages containing a timestamp with a larger $V[i]$. Therefore $V_j[i] \leq V_i[i]$ follows.
+\end{itemize}
+}
+
+\question{
+This is very similar to \textit{exercise 13} and we can use a similar approach.\\
+
+\begin{itemize}
+    \item Consider $e$ and $e'$ are successive events in the same process (VC2), or there is a message such that $e = send(m)$ and $e' = recv(m)$ (VC3,VC4). Then the result follows from VC2-VC4. \textbf{(1)}
+    \item Now assume $e_i \rightarrow e_j \Righarrow V(e_i) < V(e_j)$ for all pairs of events $i,j =  1,2,...,N$ where $i < j$ in a sequence of events of length $N$ or less. Following, $e = e_1$ and $e' = e_{N+1}$. Then it must be the case that $e \rightarrow e'$, so $V(e) < V(e_N)$ by the induction hypothesis. Then by VC2-VC4, $V(e_N) < V(e')$. Therefore by the transitive property, $V(e) < V(e_N) < V(e'), \forall N > 1$. \textbf{(2)}
+\end{itemize}
+
+Combining \textbf{(1)} and \textbf{(2)}: $e \rightarrow e' \Rightarrow V(e) < V(e')$.
+}
+
+\end{document}
