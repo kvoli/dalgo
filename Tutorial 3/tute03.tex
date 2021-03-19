@@ -2,15 +2,12 @@
 \documentclass[12pt]{article}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
-\addbibresource{refs.bib}
 \usepackage{xspace}
 \usepackage{gastex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wrapfig}
 \usepackage{tikz}
-\usepackage{minted}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
@@ -22,7 +19,17 @@
 \usepackage{tgtermes} % times font
 \usepackage[shortlabels]{enumitem}
 \usepackage{parskip}
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
 
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
 \pagestyle{empty}
 \textwidth      165mm
 \textheight     252mm
@@ -40,7 +47,6 @@
 \newcommand{\md}{\mathsf{d}}
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\intg}{\mathbb{Z}}
-\renewcommand*{\bibfont}{\footnotesize}
 
 \newcounter{question}
 \newcommand{\question}[1]{
@@ -58,14 +64,13 @@
 \begin{document}
 \topskip0pt
 \begin{center}
-{\sc The University of Melbourne
-\\
-School of Computing and Information Systems
-\\ 
-COMP90020 Distributed Algorithms}
-\bigskip \\
-{\Large\bf Tutorial Week 4: Global States}
-\bigskip \\
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    \bigskip \\
 \end{center}
 \section*{Notes}
 
@@ -84,17 +89,25 @@ An event is called \textit{presnapshot} if it occurs at a process before the loc
 
 \question{Consider the following figure:}
 
-\includegraphics[e]{Tutorial 3/comm.png}
 
 \begin{enumerate}[(a)]
     \item Provide the vector timestamps at each send, receive and concurrent event.
     \item Provide an example of a consistent and inconsistent cut.
 \end{enumerate}
 
-
 \question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
 
-\question{Does Chandy-Lamport algorithm work if channels are not FIFO? Provide a counter example or \textbf{show} why it works.}
+
+\question{ Consider the following figure
+
+
+    \begin{figure}[ht]
+        \centering
+        \incfig{three-process-chandy-lamport}
+        \caption{Three process chandy-lamport}
+        \label{fig:three-process-chandy-lamport}
+    \end{figure}
+}
 
 \question{Argue that a consistent snapshot, meaning one that satisfies properties (1) and (2), rules out orphan messages.}
 

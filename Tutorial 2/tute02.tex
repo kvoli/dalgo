@@ -2,15 +2,12 @@
 \documentclass[12pt]{article}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
-\addbibresource{refs.bib}
 \usepackage{xspace}
 \usepackage{gastex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wrapfig}
 \usepackage{tikz}
-\usepackage{minted}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
@@ -40,7 +37,6 @@
 \newcommand{\md}{\mathsf{d}}
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\intg}{\mathbb{Z}}
-\renewcommand*{\bibfont}{\footnotesize}
 
 \newcounter{question}
 \newcommand{\question}[1]{
@@ -58,14 +54,14 @@
 \begin{document}
 \topskip0pt
 \begin{center}
-{\sc The University of Melbourne
-\\
-School of Computing and Information Systems
-\\ 
-COMP90020 Distributed Algorithms}
-\bigskip \\
-{\Large\bf Tutorial Week 3: Logical Clocks}
-\bigskip \\
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 3: Logical Clocks}
+    \bigskip \\
 \end{center}
 \section*{Notes}
 \textit{Clock Condition.} For all events $a,b$: if $a \rightarrow b$ then $C(a) < C(B)$. This is satisfied if the following two conditions hold:
@@ -76,30 +72,36 @@ COMP90020 Distributed Algorithms}
 
 \section*{Exercises}
 
+
 \setcounter{question}{9}
 
-\question{Consider the following sequences of events at processes $p_0, p_1, p_2$ and $p_3$. Here $s_i$ and $r_i$ are corresponding send and receive events for all $i$, while $a$ and $b$ are internal events.}
+\question{This question is from last weeks tutorial, please attempt if you haven't already. An NTP server $B$ receives server $A$’s message at 16:34:23.480 bearing a timestamp 16:34:13.430 and replies to it. $A$ receives the message at 16:34:15.725, bearing $B$’s timestamp 16:34:25.7. Estimate the offset between $B$ and $A$ and the accuracy of the estimate.}
+
+\question{Consider the following sequence of events at processes $p_0, p_1, p_2$ and $p_3$. Here $s_i$ and $r_i$ are corresponding send and receive events for all $i$, while $a$ and $b$ are internal events.}
 \[
-\begin{array}{llllll}
-     p_0: & s_1 & s_2 & r_5  \\
-     p_1: & r_2 & s_5 \\
-     p_2: & r_1 & a & s_4 & r_3 & r_6 \\
-     p_3: & s_3 & r_4 & b & s_6
-\end{array}
+    \begin{array}{llllll}
+        p_0: & s_1 & s_2 & r_5  \\
+        p_1: & r_2 & s_5 \\
+        p_2: & r_1 & a & s_4 & r_3 & r_6 \\
+        p_3: & s_3 & r_4 & b & s_6
+    \end{array}
 \]
 
 
 
 Use Lamport's logical clock to assign clock values to these events (A diagram may help).
 
-\question{Give an example where $L(a) < L(b)$, while $a$ and $b$ are concurrent events.}
-
 \question{By considering a chain of zero or more messages connecting events $e$ and $e'$ and using induction, show that $e \rightarrow e' \Rightarrow L(e) < L(e')$}
 
-\question{Using the same set of sequences from exercise \textit{10}, draw a send/receive diagram to give Vector timestamps to each of the events.}
+\question{Using the same sequence of events from exercise \textit{10}, draw a send/receive diagram to give Vector timestamps to each of the events.}
 
-\question{Show that $V_j[i] \leq V_i[i]$ for all $i,j$}
+\question{Show that: }
 
-\question{Show that $e \rightarrow e' \Rightarrow V[e] \rightarrow V[e']$}
+
+\begin{enumerate}[(a)]
+    \item  $V_j[i] \leq V_i[i]$ for all $i,j$
+    \item $e \rightarrow e' \Rightarrow V[e]  < V[e']$
+    \item $V(e) < V(e') \Rightarrow e \rightarrow e'$
+\end{enumerate}
 
 \end{document}

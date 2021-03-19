@@ -1,15 +1,12 @@
 \documentclass[12pt]{article}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
-\addbibresource{refs.bib}
 \usepackage{xspace}
 \usepackage{gastex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wrapfig}
 \usepackage{tikz}
-\usepackage{minted}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
@@ -28,7 +25,7 @@
 \topmargin      -18mm
 \oddsidemargin  -2mm
 \evensidemargin -2mm
-% \renewcommand{\baselinestretch}{0.96}
+
 \newcommand{\impl}{\mathbin{\Rightarrow}}
 \newcommand{\biim}{\mathbin{\Leftrightarrow}}
 \newcommand{\id}[1]{\mbox{\textit{#1}}}
@@ -39,7 +36,6 @@
 \newcommand{\md}{\mathsf{d}}
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\intg}{\mathbb{Z}}
-\renewcommand*{\bibfont}{\footnotesize}
 
 \newcounter{question}
 \newcommand{\question}[1]{
@@ -56,18 +52,18 @@
 \begin{document}
 \topskip0pt
 \begin{center}
-{\sc The University of Melbourne
-\\
-School of Computing and Information Systems
-\\ 
-COMP90020 Distributed Algorithms}
-\bigskip \\
-{\Large\bf Tutorial Week 2: Distributed Clocks}
-\bigskip \\
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 2: Distributed Clocks}
+    \bigskip \\
 \end{center}
 \section*{Notes}
 % note on cameras/zoomgg
-Please ensure that you make every effort to have your camera on and actively participate in the tutorial discussion. Exercise questions marked * are additional questions that won't be the focus of the tutorial but may provide useful in your revision for quizzes and the exam. 
+Please ensure that you make every effort to have your camera on and actively participate in the tutorial discussion. Exercise questions marked * are additional questions that won't be the focus of the tutorial but may be useful in your revision for quizzes and the final exam.
 
 The tute sheet for the \textbf{following week} and solutions for the \textbf{current week} will be provided weekly on Friday afternoon.
 
@@ -83,26 +79,26 @@ Modern computers usually have two different types of clocks:
 \question{Consider the following: A clock is reading 10:27:54.0 (hr:min:sec) when it is discovered to be 4 seconds fast.}
 
 \begin{enumerate}[(a)]
-\item What condition would be broken if the clock were immediately set back to 10:27:50.0
-\item Show how the clock should be adjusted as to be correct after at 10:28:02.0.
+    \item What condition would be broken if the clock were immediately set back to 10:27:50.0?
+    \item Show how the clock should be adjusted as to be correct after at 10:28:02.0.
 \end{enumerate}
 
 \question{A scheme for implementing at-most-once reliable message delivery uses synchronized clocks to reject duplicate messages. Processes place their local clock value (a ‘timestamp’) in the messages they send. Each receiver keeps a table giving, for each sending process, the largest message timestamp it has seen. Assume that clocks are synchronized to within 101 ms, and that messages can arrive at most 50 ms after transmission}
 
 \begin{enumerate}[(a)]
-\item When may a process ignore a message bearing a timestamp $T$, if it has recorded the last message received from that process as having timestamp $T'$
-\item When may a receiver remove a timestamp 175,00ms from its table?
-\item Should the clocks be internally or externally synchronized?
+    \item When may a process ignore a message bearing a timestamp $T$, if it has recorded the last message received from that process as having timestamp $T'$?
+    \item When may a receiver remove a timestamp 175,000ms from its table?
+    \item Should the clocks be internally or externally synchronized?
 \end{enumerate}
 
-\question{A client attempts to synchronize with a time server. It records the round trip time $T_{round}$ and timestamp $t$ returned by the server. In some cases it knows $T_{min}$, the minimum possible delay between sending and receiving a message. What time should the client set it's clock to. What is the accuracy in respect to the time server.}
+\question{A client attempts to synchronize with a time server. It records the round trip time $T_{round}$ and timestamp $t$ returned by the server. In some cases it knows $T_{min}$, the minimum possible delay between sending and receiving a message. What time should the client set it's clock to? What is the accuracy in respect to the time server?}
 
 \begin{enumerate}[(a)]
-\item $T_{round} = 4$s, $t = $10:55:22
-\item $T_{round} = 3$s, $t = $10:55:22, $T_{min} = 1$s
+    \item $T_{round} = 4$s, $t = $10:55:22
+    \item $T_{round} = 3$s, $t = $10:55:22, $T_{min} = 1$s
 \end{enumerate}
 
-\question{Assuming the minimum round trip time is 1 second, using Christian's algorithm, what must be the case in order to achieve an accuracy of $\pm$1s with respect to the time server.}
+\question{Assuming the minimum round trip time is 1 second, using Christian's algorithm, what must be the case in order to achieve an accuracy of $\pm$1s with respect to the time server?}
 
 \question{An NTP server $B$ receives server $A$’s message at 16:34:23.480 bearing a timestamp 16:34:13.430 and replies to it. $A$ receives the message at 16:34:15.725, bearing $B$’s timestamp 16:34:25.7. Estimate the offset between $B$ and $A$ and the accuracy of the estimate.}
 
@@ -116,3 +112,4 @@ Modern computers usually have two different types of clocks:
 
 \textit{Questions based off Colouris, Dollimore and Kindberg}
 \end{document}
+
