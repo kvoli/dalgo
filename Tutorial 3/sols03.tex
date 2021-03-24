@@ -1,17 +1,13 @@
 
-
 \documentclass[12pt]{article}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
-\addbibresource{refs.bib}
 \usepackage{xspace}
 \usepackage{gastex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wrapfig}
 \usepackage{tikz}
-\usepackage{minted}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
@@ -22,8 +18,18 @@
 \usepackage{multicol}
 \usepackage{tgtermes} % times font
 \usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
 
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
 
+\pdfsuppresswarningpagegroup=1
 \pagestyle{empty}
 \textwidth      165mm
 \textheight     252mm
@@ -41,9 +47,6 @@
 \newcommand{\md}{\mathsf{d}}
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\intg}{\mathbb{Z}}
-\renewcommand*{\bibfont}{\footnotesize}
-
-\usepackage{parskip}
 
 \newcounter{question}
 \newcommand{\question}[1]{
@@ -57,86 +60,73 @@
 }
 
 
-
 \begin{document}
 \topskip0pt
 \begin{center}
-{\sc The University of Melbourne
-\\
-School of Computing and Information Systems
-\\ 
-COMP90020 Distributed Algorithms}
-\bigskip \\
-{\Large\bf Tutorial Week 4: Global States}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Solutions Week 4: Global States}
 \end{center}
-\section*{Solutions}
 
-\setcounter{question}{9}
+\section*{Exercises}
 
-\question{
+\setcounter{question}{14}
 
-\begin{itemize}
-    \item \textbf{LC1:} $L_i$ is incremented before each event is issued at process $p_i$, $L_i := L_i+1$
-    \item \textbf{LC2:} 
-    \begin{enumerate}[(a)]
-        \item When a process $p_i$ sends a message $m_i$, it piggybacks on $m$ the value $t = L_i$
-        \item On receiving ($m,t$), a process $p_j$ computes $L_j := max(L_j, t)$ and then applies \textbf{LC1} before time stamping the event \textit{receive(m)}
-    \end{enumerate} 
-\end{itemize}
+\question{    \begin{enumerate}[(a)]
 
-\begin{itemize}
-    \item $p_0$ = $(s_1=1, s_2=2, r_5 = 5)$
-    \item $p_1$ = $(r_2=3, s_5=4)$
-    \item $p_2$ = $(r_1=2, a=3, s_4=4, r_3=5, r_6=8)$
-    \item $p_3$ = $(s_3=1, r_4=5, b=6, s_6=7)$
-\end{itemize}
+
+        \item Provide the vector timestamps at each send, receive and concurrent event.
+        \item Provide an example of a consistent and inconsistent cut.
+    \end{enumerate}
 }
 
-\question{
-Concurrent events aren't related by $a \rightarrow b$ or $b \rightarrow a$. We use $a || b$ to denote concurrent events. In the above example, $L(s_3) < L(a)$ whilst $s_3 || a$.
-}
+\pagebreak
 
-\question{
+\question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
 
-\begin{itemize}
-    \item Consider $e$ and $e'$ are successive events in the same process (LC1) or related to by $e = send(m)$ and $e' = recv(m)$ (LC2), then it must be the case that $L(e) < L(e')$. \textbf{(1)}
-    \item Now assume $e_i \rightarrow e_j \Rightarrow L(e_i) < L(e_j)$ for all connected pairs of events $i,j$ where $i<j$ in a sequence of length $N$ or less. Following, $e$ and $e'$ are connected by a chain of events $e_1,e_2,...,e_{N+1}$ at $m \geq 1$ processes such that $e = e_1$ and $e' = e_{N+1}$. Then it must be the case that $e \rightarrow e_N$, so $L(e) < L(e_N)$ by the induction hypothesis. Then by (LC1) and (LC2), $L(e_N) < L(e')$. Therefore by the transitive property, $L(e) < L(e_N) < L(e'), \forall N>1$. \textbf{(2)}.
-\end{itemize}
-Combining \textbf{(1)} and \textbf{(2)}: $e \rightarrow e' \Rightarrow L(e) < L(e')$.
-}
 
-\question{
-\begin{itemize}
-    \item \textbf{VC1:} Initially, $V_i[j] = 0$ for $i,j = 1,2,...,N$.
-    \item \textbf{VC2:} Just before $p_i$ timestamps an event, it sets $V_i[i] := V_i[i]+1$.
-    \item \textbf{VC3:} $p_i$ includes the value $t = V_i$ in every message it sends.
-    \item \textbf{VC4:} When $p_i$ receives a timestamp t in a message, it sets $V_i[j] := max(V_i[j], t[j])$ for $j = 1,2,...,N$. Taking the component wise maximum of the two vector timestamps.
-\end{itemize}
+\question{Consider the following figure}
 
-\begin{itemize}
-    \item $p_0$ = $(s_1=[1,0,0,0], s_2=[2,0,0,0], r_5 = [3,2,0,0])$
-    \item $p_1$ = $(r_2=[2,1,0,0], s_5=[2,2,0,0])$
-    \item $p_2$ = $(r_1=[1,0,1,0], a=[1,0,2,0], s_4=[1,0,3,0], r_3=[1,0,4,1], r_6=[1,0,5,4])$
-    \item $p_3$ = $(s_3=[0,0,0,1], r_4=[1,0,3,2], b=[1,0,3,3], s_6=[1,0,3,4])$
-\end{itemize}
-}
+\begin{figure}[ht]
+    \centering
+    \incfig{channel-complete-communication-with-three-processors}
+    \caption{Channel complete communication with three processors}
+    \label{fig:channel-complete-communication-with-three-processors}
+\end{figure}
 
-\question{Consider:
-\begin{itemize}
-    \item Initially by VC1, $V_i[j]=0$ for $i,j = 1,2,...,N$, therefore $V_j[i] \leq V_i[i]$
-    \item Then by VC2, $p_i$ is the source of any increment to $V[i]$. This occurs before timestamping any event. $p_j$ increments $V_j[i]$ only as it receives messages containing a timestamp with a larger $V[i]$. Therefore $V_j[i] \leq V_i[i]$ follows.
-\end{itemize}
-}
+In the above system, each process calculates it's next message it will send, using the first message that exists in it's buffer as follows.
+\[
+    next(msg_{i}) = \begin{cases}
+        \frac{msg_i}{2}  & msg_i \bmod 2 = 0 \\
+        3 \cdot msg_i + 1, & msg_i \bmod 2 = 1
+    \end{cases}
+\]
 
-\question{
-This is very similar to \textit{exercise 13} and we can use a similar approach.\\
+Likewise, each process $m$ decides which corresponding neigbour $k$ to send this message to as follows:
 
-\begin{itemize}
-    \item Consider $e$ and $e'$ are successive events in the same process (VC2), or there is a message such that $e = send(m)$ and $e' = recv(m)$ (VC3,VC4). Then the result follows from VC2-VC4. \textbf{(1)}
-    \item Now assume $e_i \rightarrow e_j \Righarrow V(e_i) < V(e_j)$ for all pairs of events $i,j =  1,2,...,N$ where $i < j$ in a sequence of events of length $N$ or less. Following, $e = e_1$ and $e' = e_{N+1}$. Then it must be the case that $e \rightarrow e'$, so $V(e) < V(e_N)$ by the induction hypothesis. Then by VC2-VC4, $V(e_N) < V(e')$. Therefore by the transitive property, $V(e) < V(e_N) < V(e'), \forall N > 1$. \textbf{(2)}
-\end{itemize}
+\[
+    target(msg_i, m) = \begin{cases}
+        (m + 1) \bmod 3  & msg_i \bmod 2 = 0 \\
+        (m - 1) \bmod 3, & msg_i \bmod 2 = 1
+    \end{cases}
+\]
 
-Combining \textbf{(1)} and \textbf{(2)}: $e \rightarrow e' \Rightarrow V(e) < V(e')$.
-}
+Assume each node holds no local state, only processing it's buffer in a FIFO manner. Initially, each node has it's buffer contain a single value:
+
+\begin{align*}
+    p_0 = \{50\},
+    p_1 = \{150\},
+    p_2 = \{450\}
+\end{align*}
+
+\begin{enumerate}[(a)]
+    \item After some sequence of messages, each nodes buffer is as follows: $p_0: \theta,  p_1: \{169,58\}, p_2: \{113\}$. Is this a possible (globally consistent) state?
+    \item Assume in the above scenario, process $p_0$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.
+\end{enumerate}
+
 
 \end{document}

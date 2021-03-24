@@ -60,7 +60,6 @@
 }
 
 
-
 \begin{document}
 \topskip0pt
 \begin{center}
@@ -70,7 +69,7 @@
         \\
     COMP90020 Distributed Algorithms}
     \bigskip \\
-    \bigskip \\
+    {\Large\bf Tutorial Week 4: Global States}
 \end{center}
 \section*{Notes}
 
@@ -85,31 +84,67 @@ An event is called \textit{presnapshot} if it occurs at a process before the loc
 
 \section*{Exercises}
 
-\setcounter{question}{15}
+\setcounter{question}{14}
 
-\question{Consider the following figure:}
-
-
-\begin{enumerate}[(a)]
-    \item Provide the vector timestamps at each send, receive and concurrent event.
-    \item Provide an example of a consistent and inconsistent cut.
-\end{enumerate}
-
-\question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
-
-
-\question{ Consider the following figure
+\question{Consider the following figure:
 
 
     \begin{figure}[ht]
         \centering
-        \incfig{three-process-chandy-lamport}
-        \caption{Three process chandy-lamport}
-        \label{fig:three-process-chandy-lamport}
+        \incfig{three-process-sequence-diagram}
+        \caption{Three process sequence diagram}
+        \label{fig:three-process-sequence-diagram}
     \end{figure}
+
+    \begin{enumerate}[(a)]
+        \item Provide the vector timestamps at each send, receive and concurrent event.
+        \item Provide an example of a consistent and inconsistent cut.
+    \end{enumerate}
 }
 
-\question{Argue that a consistent snapshot, meaning one that satisfies properties (1) and (2), rules out orphan messages.}
+\pagebreak
+
+\question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
+
+
+\question{Consider the following figure}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{channel-complete-communication-with-three-processors}
+    \caption{Channel complete communication with three processors}
+    \label{fig:channel-complete-communication-with-three-processors}
+\end{figure}
+
+In the above system, each process calculates it's next message it will send, using the first message that exists in it's buffer as follows.
+\[
+    next(msg_{i}) = \begin{cases}
+        \frac{msg_i}{2}  & msg_i \bmod 2 = 0 \\
+        3 \cdot msg_i + 1, & msg_i \bmod 2 = 1
+    \end{cases}
+\]
+
+Likewise, each process $m$ decides which corresponding neigbour $k$ to send this message to as follows:
+
+\[
+    target(msg_i, m) = \begin{cases}
+        (m + 1) \bmod 3  & msg_i \bmod 2 = 0 \\
+        (m - 1) \bmod 3, & msg_i \bmod 2 = 1
+    \end{cases}
+\]
+
+Assume each node holds no local state, only processing it's buffer in a FIFO manner. Initially, each node has it's buffer contain a single value:
+
+\begin{align*}
+    p_0 = \{11\},
+    p_1 = \{10\},
+    p_2 = \{9\}
+\end{align*}
+
+\begin{enumerate}[(a)]
+    \item After some sequence of messages, each nodes buffer is as follows: $p_0: \{\},  p_1: \{\}  p_2: \{\{34\}\{5,14\}\{\}\}$. Is this a possible (globally consistent) state?
+    \item Assume in the above scenario, process $p_0$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.
+\end{enumerate}
 
 
 \end{document}

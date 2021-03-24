@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="240mm"
+   height="120mm"
+   viewBox="0 0 240 120"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="=3$-connected-process-communication.svg">
+  <defs
+     id="defs2">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 60 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="240 : 60 : 1"
+       inkscape:persp3d-origin="120 : 40 : 1"
+       id="perspective54" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.99437388"
+     inkscape:cx="496.88147"
+     inkscape:cy="182.72055"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showborder="true"
+     width="200mm"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1361"
+     inkscape:window-height="1393"
+     inkscape:window-x="31"
+     inkscape:window-y="1470"
+     inkscape:window-maximized="1"
+     inkscape:document-rotation="0"
+     inkscape:snap-global="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="false"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="false"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-page="true"
+     inkscape:snap-grids="true"
+     inkscape:snap-to-guides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       units="mm"
+       spacingx="10"
+       spacingy="10"
+       empspacing="4"
+       dotted="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-177)">
+    <ellipse
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583"
+       id="path8"
+       cx="119.0938"
+       cy="268.46823"
+       rx="8.4797106"
+       ry="7.1643558" />
+    <ellipse
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583"
+       id="ellipse10"
+       cx="181.2007"
+       cy="215.17526"
+       rx="8.4797106"
+       ry="7.1643558" />
+    <ellipse
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.264583"
+       id="ellipse12"
+       cx="62.529266"
+       cy="214.80679"
+       rx="8.4797106"
+       ry="7.1643558" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 71.008977,214.80679 102.075103,-0.27235 v 0 0"
+       id="path72" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 181.56379,221.6988 -53.99028,46.76943"
+       id="path74" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 110.61409,268.46823 62.529267,221.97115"
+       id="path76" />
+    <text
+       style="font-size:4.29745px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.429745"
+       xml:space="preserve"
+       id="text1279"
+       y="227.1069"
+       x="52.894611"
+       transform="scale(1.0520204,0.9505519)"><tspan
+         sodipodi:role="line"
+         id="tspan1277"
+         x="52.894611"
+         y="227.1069"
+         style="stroke-width:0.429745">$p_0$</tspan></text>
+    <text
+       style="font-size:4.70779px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.470779"
+       xml:space="preserve"
+       id="text1307"
+       y="216.24005"
+       x="174.241"
+       transform="scale(0.99779825,1.0022066)"><tspan
+         sodipodi:role="line"
+         id="tspan1305"
+         x="174.241"
+         y="216.24005"
+         style="stroke-width:0.470779">$p_1$</tspan></text>
+    <text
+       style="font-size:4.25324px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.425324"
+       xml:space="preserve"
+       id="text1321"
+       y="268.32318"
+       x="113.97437"
+       transform="scale(0.99486479,1.0051617)"><tspan
+         sodipodi:role="line"
+         id="tspan1319"
+         x="113.97437"
+         y="268.32318"
+         style="stroke-width:0.425324">$p_2$</tspan></text>
+  </g>
+</svg>
