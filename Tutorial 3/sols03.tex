@@ -76,56 +76,31 @@
 
 \setcounter{question}{14}
 
-\question{    \begin{enumerate}[(a)]
+\question{
 
-
-        \item Provide the vector timestamps at each send, receive and concurrent event.
-        \item Provide an example of a consistent and inconsistent cut.
+    \begin{enumerate}[(a)]
+        \item Please see the excalidraw for a visual solution.
+        \item Please see the excalidraw for a visual solution.
     \end{enumerate}
 }
 
-\pagebreak
 
-\question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
+\question{In answering this question, it's important to make a note that the message being passed around is like a token
+    and has no value in it's actual contents. We can see that Q, will always have a state $Q \geq P$, due to it receiving the token
+    first. More precisely, $P = Q$ or $P = Q - 1$. In the first case, P would have just received the message and incremented it's counter. In the second case, vice versa. The question states that P has just sent a message, therefore the starting state must be $P=102$, $Q = 102$.\\
+
+    Following, the two snapshot results that could arise are:
+
+    $snap(P) =  <102, \{m\}>$, $snap(Q) = <103, \{\}>$. In the case where Q sends the message before it receives the marker. Or $snap(P) =  <102, \{\}>, snap(Q) = <103, \{\}>$, when it receives the marker before having sent the message, mandating it to send the marker first. See the excalidraw for a visual solution.
+}
 
 
-\question{Consider the following figure}
+\question{}
 
-\begin{figure}[ht]
-    \centering
-    \incfig{channel-complete-communication-with-three-processors}
-    \caption{Channel complete communication with three processors}
-    \label{fig:channel-complete-communication-with-three-processors}
-\end{figure}
-
-In the above system, each process calculates it's next message it will send, using the first message that exists in it's buffer as follows.
-\[
-    next(msg_{i}) = \begin{cases}
-        \frac{msg_i}{2}  & msg_i \bmod 2 = 0 \\
-        3 \cdot msg_i + 1, & msg_i \bmod 2 = 1
-    \end{cases}
-\]
-
-Likewise, each process $m$ decides which corresponding neigbour $k$ to send this message to as follows:
-
-\[
-    target(msg_i, m) = \begin{cases}
-        (m + 1) \bmod 3  & msg_i \bmod 2 = 0 \\
-        (m - 1) \bmod 3, & msg_i \bmod 2 = 1
-    \end{cases}
-\]
-
-Assume each node holds no local state, only processing it's buffer in a FIFO manner. Initially, each node has it's buffer contain a single value:
-
-\begin{align*}
-    p_0 = \{50\},
-    p_1 = \{150\},
-    p_2 = \{450\}
-\end{align*}
 
 \begin{enumerate}[(a)]
-    \item After some sequence of messages, each nodes buffer is as follows: $p_0: \theta,  p_1: \{169,58\}, p_2: \{113\}$. Is this a possible (globally consistent) state?
-    \item Assume in the above scenario, process $p_0$ initiates the chandy-lamport snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.
+    \item Yes, to see why - first consider the numbers $\{9,10,11\}$, for each map out the sequence of numbers that follow by applying the function defined in the question (Collatz Conjecture). You can then find that $\{11,34\}$, $\{10,5\}$ and $\{9,28,14\}$ occur as the second, second and third numbers in the sequence respectively. From this, it appears possible that we could simulate the first few steps and check! See excalidraw for the process diagram.
+    \item In this case, there are very many possible, different resulting snapshots, depending on the order in which each process decides to prioritize between it's buffers (channels). To see one possible solution, refer to excalidraw.
 \end{enumerate}
 
 
