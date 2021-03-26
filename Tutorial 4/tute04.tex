@@ -1,15 +1,12 @@
 \documentclass[12pt]{article}
 \usepackage{comment}
 \usepackage[utf8]{inputenc}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
-\addbibresource{refs.bib}
 \usepackage{xspace}
 \usepackage{gastex}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{wrapfig}
 \usepackage{tikz}
-\usepackage{minted}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
@@ -39,7 +36,6 @@
 \newcommand{\md}{\mathsf{d}}
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\intg}{\mathbb{Z}}
-\renewcommand*{\bibfont}{\footnotesize}
 
 \newcounter{question}
 \newcommand{\question}[1]{
@@ -57,45 +53,39 @@
 \begin{document}
 \topskip0pt
 \begin{center}
-{\sc The University of Melbourne
-\\
-School of Computing and Information Systems
-\\ 
-COMP90020 Distributed Algorithms}
-\bigskip \\
-{\Large\bf Tutorial Week 4: Global States}
-\bigskip \\
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 5: Mutual Exclusion and Failure Detection}
+    \bigskip \\
 \end{center}
+
 \section*{Notes}
 
-An event is called \textit{presnapshot} if it occurs at a process before the local snapshot at that process is taken; otherwise it is called \textit{postsnapshot}. A snapshot is consistent if
+In this tutorial we will look at mutual exclusion and briefly at failure detectors. Both of these topics much more to offer. In particular, we will only examine mutual exclusion under message passing and won't look at shared register algorithms.
 
-\begin{itemize}
-    \item (1) no postsnapshop event is causally before a presnapshot event
-    \item (2) a basic message is included in a channel state if and only if the corresponding send event is presnapshot while the corresponding receive event is postsnapshot.
-\end{itemize}
-
+If you're interested to learn more broadly on these topics, a great place to start is Lamport's bakery algorithm and if interested further continue onto queue, CLH and MCS locks.
 
 
 \section*{Exercises}
 
-\setcounter{question}{15}
+\setcounter{question}{17}
 
-\question{Consider the following figure:}
+\question{Is it possible to implement either a reliable or an unreliable (process) failure detector using an unreliable communication channel?}
 
-\includegraphics[e]{Tutorial 3/comm.png}
+\question{Say for both mutual exclusion and startvation-freeness whether it is a safety or liveness property.}
 
-\begin{enumerate}[(a)]
-    \item Provide the vector timestamps at each send, receive and concurrent event.
-    \item Provide an example of a consistent and inconsistent cut.
-\end{enumerate}
+\question{In the central server algorithm for mutual exclusion, describe a situation in which two requests are not processed in happened-before order.}
 
+\question{Give an example execution of the ring-based algorithm to show that processes are not necessarily granted entry to the critical section in happened-before order}
 
-\question{Consider the following: Two processes $P$ and $Q$ are connected in a ring using two channels, and they constantly rotate a message $m$. At any one time, there is only one copy of $m$ in the system. Each process’s state consists of the number of times it has received $m$, and $P$ sends $m$ first. At a certain point, $P$ has the message and its state is 102. Immediately after sending $m$, $P$ initiates the snapshot algorithm. Explain the operation of the algorithm in this case, giving the possible global state(s) reported by it.}
+\question{Consider running Maekawa’s algorithm on a system of $13$ processes. Figure out the composition of the $13$ subsets $S_0$ - $S_{12}$, so that (1) each subset includes four processes, (2) there are exactly four subsets, and (3) process $i \in s_i$}
 
-\question{Does Chandy-Lamport algorithm work if channels are not FIFO? Provide a counter example or \textbf{show} why it works.}
+\question{The L-exclusion problem is a generalized version of the mutual exclusion problem in which up to L processes $L \geq 1$ are allowed to be in their critical sections simultaneously.  Precisely, if fewer than $L$ processes are in the CS at any time and one more process wants to enter its critical section, then it must be allowed to do so. Modify Ricart–Agrawala’s algorithm to solve the L-exclusion problem}
 
-\question{Argue that a consistent snapshot, meaning one that satisfies properties (1) and (2), rules out orphan messages.}
-
+\question{In a network of processes, the \textit{local mutual exclusion} problem guarantees that no two neighbors execute a critical action at the same time. Extend Ricart–Agrawala’s to solve the local mutual exclusion problem}
 
 \end{document}
