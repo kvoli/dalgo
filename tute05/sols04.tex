@@ -1,0 +1,143 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 5: Mutual Exclusion and Failure Detection}
+    \bigskip \\
+\end{center}
+
+\section*{Notes}
+
+In this tutorial we will look at mutual exclusion and briefly at failure detectors. Both of these topics have much more to offer. In particular, we will only examine mutual exclusion using message passing and won't look at algorithms that use shared memory.
+
+If you're interested to learn more broadly on these topics, a great place to start is Lamport's bakery algorithm and further continue onto queue, CLH and MCS locks.
+
+
+\section*{Exercises}
+
+\setcounter{question}{17}
+
+\question{Unreliable - yes, all that changes is that there may be a higher false positive rate (detecting process failures when instead its due to unreliable delivery). Reliable - No! We cannot implement a reliable failure detector on either channel type without an upper bound on message delay i.e. a sync system.}
+
+\question{Mututal exclusion is a safety property, it must be met in order to ensure correctness - where correctness is met as at most one process can be in the CS at any one time. So in other words, something breaking should never happen. Liveness properties say that something good (progress) should happen in some finite time. Starvation indicates that a process cannot progress, therefore starvation-freeness must be a liveness property. An interesting follow up - under the definitions presented, deadlock-freeness is also a liveness properties however, in some textbooks it is defined separately as a safety condition.}
+
+\question{Consider the following events consisting of three processes: A, B and the central server C}
+
+
+\begin{itemize}
+    \item A requests entry to CS (sending a message to C)
+    \item A sends a msg to B (could be anything)
+    \item B receives A's message
+    \item B then requests entry to CS (sending a message to C)
+    \item C receives B's request first and responds with the token
+    \item B receives the token and enters CS
+    \item C receives A's request and queues it.
+\end{itemize}
+
+Clearly, in this set of events - there is a HB relation on A requesting entry and B requesting entry. This ordering was not honored at C as B was granted the token instead of A. Therefore ME3 has been violated.
+
+\question{We can propose a similar example to the question above, consider three processes A,B,C arranged in a ring such that A has a directed edge to B, B has a directed edge to C and C has a directed edge to A. Assume the token starts at C}
+
+\begin{itemize}
+    \item B requests entry to its CS (sends a message to C) and enters wanted state
+    \item B sends a msg to A (could be anything - this message exists outside of the abstract topology of directed edges for the ring algorithm)
+    \item A receives Bs message
+    \item A requests entry to its CS (sends a message to B) and enters wanted state
+    \item C exits its CS and passes the token to A.
+    \item A receives the token and enters its CS
+\end{itemize}
+
+As before, we have violated ME3 as there is a HB relation on B requesting entry and A requesting entry that is not honored.
+
+\question{This problem is akin to a constraints question and not a likely candidate for any timed test.}
+
+
+\begin{array}{lcl}
+    S1  &=& \{1,2,3,4\} \\
+    S2  &=& \{2,5,8,11\} \\
+    S3  &=& \{3,6,8,13\} \\
+    S4  &=& \{4,6,10,11\} \\
+    S5  &=& \{1,5,6,7\} \\
+    S6  &=& \{2,6,9,12\} \\
+    S7  &=& \{2,7,10,13\} \\
+    S8  &=& \{3,6,8,13\} \\
+    S9  &=& \{3,7,9,11\} \\
+    S10 &=& \{3,5,10,12\} \\
+    S11 &=& \{1,11,12,13\} \\
+    S12 &=& \{4,7,8,12\} \\
+    S13 &=& \{4,5,9,13\} \\
+\end{array}
+
+
+\question{The L-exclusion problem can be considered a general case of the mutual exclusion problem. Therefore in normal circumstances, when we wish at most L=1 process to enter its CS at any time we require $N-1$ acks from processes (not including itself). We can generalize this to $N-L$ acks and note that ME1-3 still hold. See the excalidraw for some examples. There were also some solutions that suggested use of tokens that acted as leases - this solution appeared viable for ME1,ME2 however couldn't satisfy ME3.}
+
+\question{Consider the following steps for each process i:
+
+    (A) Process i sends a time stamped request to each neighbor
+
+    (B) A process sends an ack to a neighbor j when it is not in its CS, or its
+    own timestamp is greater (it wants the resource)nd it has previously requested the resource.
+
+    If the receiving process is in its CS then it sends the ack to each requesting process when it exits
+    its own CS.
+
+(C) A process enters its CS when it receives an ack from each of it neighbors.}
+
+\end{document}
