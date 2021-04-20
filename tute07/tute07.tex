@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 8: Distributed Consensus}
+    \bigskip \\
+\end{center}
+
+\section*{Notes}
+
+Note all of the following assume the system is synchronous (why?). Coordinated attack assumes possible channel faults. Byzantine Agreement and Byzantine Broadcast assume possible byzantine (arbitrary) faults.
+
+\subsubsection*{Coordinated Attack}
+
+\begin{center}
+    \textit{We have $n \geq 2$ nodes. The messages received in round $i+1$ is always a subset (possibly empty, communication unreliable) of the set sent in round $i$. Each node starts with an input $v_i \in \{0,1\}$ and must decide on $d_i \in \{0,1\}$ in a bounded number of rounds.}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Agreement: } $d_i = d_j$ for all nodes.
+    \item \textbf{Integrity: } If $v_i = v_j$ for all paris of nodes and no messages are lost, all processes have the same output $d_i = d_j$.
+    \item \textbf{Termination: } All processes terminate in a bounded number of rounds.
+\end{itemize}
+
+
+\subsubsection*{Byzantine Broadcast (BB)}
+
+\begin{center}
+    \textit{Some node ($p_{j} \in {p_1, ..., p_n}$) broadcasts $v_j$ to $p_i \in \{p_1, ..., p_n\}$, and each correct node must agree on the message received. If $p_{j}$ is correct then all correct nodes must agree $d_i = v_j$.}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Agreement: } $d_i = d_j$ for each correct node.
+    \item \textbf{Integrity: } If $v_i = v$ for all correct nodes,$d_i = v$ for all correct nodes.
+    \item \textbf{Termination: } eventually $d_i \not = \bot$ for each correct node (assume $d_i = \bot$ at init).
+\end{itemize}
+
+Commonly described in terms of Generals and lieutenants.
+
+\subsubsection*{Byzantine Agreement (BA)}
+
+\begin{center}
+    \textit{Each node ($\forall p_i \in {p_1, ..., p_n}$) begins holding an input $v_i$ and they must come to an an agreement on their output.}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Agreement: } $d_i = d_j$ for all correct nodes.
+    \item \textbf{Integrity: } If $v_i = v$ for all correct nodes, then $d_i = v$ for all correct nodes.
+    \item \textbf{Termination: } eventually $d_i \not = \bot$ for each correct node (assume $d_i = \bot$ at init).
+\end{itemize}
+
+\pagebreak
+
+\section*{Exercises}
+
+\setcounter{question}{35}
+
+\question{Two loyal generals are planning to coordinate their actions for conquering a strategic town. To conquer the town, they need to both agreee on: attack or retreat; otherwise, if only one of them attacks and the other does not , then the generals are likely to be defeated. To plan the attack, they send messages back and forth via trusted messengers. The communication is synchronous. However, the messengers can be killed or captured so the communication is unreliable.
+
+
+In this example is it possible to satisfy \textit{agreement}, \textit{integrity} and \textit{termination} as stated in \textbf{Coordinated Attack}? Provide justification.}
+
+\question{Construct an execution of the EIG algorithm where there are 3 processes, 1 process exhibits byzantine faults and integrity is not satisfied (draw two EIG trees and show they have a different \lambda).}
+
+\question{When considering Byzantine Agreement (BA) and Byzantine Broadcast (BB):}
+
+\begin{enumerate}[(a)]
+    \item Is it possible to construct a solution to BB using a solution to BA? Briefly explain.
+    \item Is it possible to construct a solution to BA using a solution to BB? Briefly explain (assume $f < \frac{n}{2}$).
+\end{enumerate}
+
+\question{Seven members of a family interviewed a candidate for the open position of a cook.  If the communication is purely asynchronous and message-based, and decisions are based on majority votes, then describe a scenario to show how the family can remain undecided, when one member disappears after the interview.}
+
+
+\question{Using oral messages, the byzantine generals algorithm helps reach a consensus when less than one-third of the generals are traitors. However, it does not suggest how to identify the traitors. Examine if the traitors can be identified without any ambiguity if the number of traitors is known.}
+
+
+\end{document}
