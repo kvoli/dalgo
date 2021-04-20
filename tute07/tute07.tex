@@ -75,7 +75,7 @@ Note all of the following assume the system is synchronous (why?). Coordinated a
 
 \begin{itemize}
     \item \textbf{Agreement: } $d_i = d_j$ for all nodes.
-    \item \textbf{Integrity: } If $v_i = v_j$ for all paris of nodes and no messages are lost, all processes have the same output $d_i = d_j$.
+    \item \textbf{Integrity: } If $v_i = v_j$ for all pairs of nodes and no messages are lost, all processes have the same output $d_i = d_j$.
     \item \textbf{Termination: } All processes terminate in a bounded number of rounds.
 \end{itemize}
 
@@ -83,13 +83,13 @@ Note all of the following assume the system is synchronous (why?). Coordinated a
 \subsubsection*{Byzantine Broadcast (BB)}
 
 \begin{center}
-    \textit{Some node ($p_{j} \in {p_1, ..., p_n}$) broadcasts $v_j$ to $p_i \in \{p_1, ..., p_n\}$, and each correct node must agree on the message received. If $p_{j}$ is correct then all correct nodes must agree $d_i = v_j$.}
+    \textit{Some node ($p_{j} \in {p_1, ..., p_n}$) broadcasts $v_j$ to every node ($\forall p_i \in \{p_1, ..., p_n\}$), and each correct node must agree on the message received. If $p_{j}$ is correct then all correct nodes must agree $d_i = v_j$.}
 \end{center}
 
 \begin{itemize}
     \item \textbf{Agreement: } $d_i = d_j$ for each correct node.
-    \item \textbf{Integrity: } If $v_i = v$ for all correct nodes,$d_i = v$ for all correct nodes.
-    \item \textbf{Termination: } eventually $d_i \not = \bot$ for each correct node (assume $d_i = \bot$ at init).
+    \item \textbf{Integrity: } If $p_{j}$ is a correct, then all correct nodes must agree on ouput $d_i = v_j$.
+    \item \textbf{Termination: } eventually $d_i \not = \bot$ for each correct node where initially $d_i = \bot$.
 \end{itemize}
 
 Commonly described in terms of Generals and lieutenants.
@@ -103,7 +103,7 @@ Commonly described in terms of Generals and lieutenants.
 \begin{itemize}
     \item \textbf{Agreement: } $d_i = d_j$ for all correct nodes.
     \item \textbf{Integrity: } If $v_i = v$ for all correct nodes, then $d_i = v$ for all correct nodes.
-    \item \textbf{Termination: } eventually $d_i \not = \bot$ for each correct node (assume $d_i = \bot$ at init).
+    \item \textbf{Termination: } eventually  $d_i \not = \bot$ for each correct node where initially $d_i = \bot$.
 \end{itemize}
 
 \pagebreak
@@ -112,12 +112,12 @@ Commonly described in terms of Generals and lieutenants.
 
 \setcounter{question}{35}
 
-\question{Two loyal generals are planning to coordinate their actions for conquering a strategic town. To conquer the town, they need to both agreee on: attack or retreat; otherwise, if only one of them attacks and the other does not , then the generals are likely to be defeated. To plan the attack, they send messages back and forth via trusted messengers. The communication is synchronous. However, the messengers can be killed or captured so the communication is unreliable.
+\question{Two loyal generals are planning to coordinate their actions for conquering a strategic town. To conquer the town, they need to both agreee on: attack or retreat; otherwise, if only one of them attacks and the other does not, then the generals are likely to be defeated. To plan the attack, they send messages back and forth via trusted messengers. The communication is synchronous. However, the messengers can be killed or captured so the communication is unreliable.
 
 
 In this example is it possible to satisfy \textit{agreement}, \textit{integrity} and \textit{termination} as stated in \textbf{Coordinated Attack}? Provide justification.}
 
-\question{Construct an execution of the EIG algorithm where there are 3 processes, 1 process exhibits byzantine faults and integrity is not satisfied (draw two EIG trees and show they have a different \lambda).}
+\question{Construct an execution of the EIG algorithm (BA) where there are 3 processes, 1 process exhibits byzantine faults and integrity is not satisfied (draw two EIG trees and show they have a different $\lambda$).}
 
 \question{When considering Byzantine Agreement (BA) and Byzantine Broadcast (BB):}
 
@@ -129,7 +129,7 @@ In this example is it possible to satisfy \textit{agreement}, \textit{integrity}
 \question{Seven members of a family interviewed a candidate for the open position of a cook.  If the communication is purely asynchronous and message-based, and decisions are based on majority votes, then describe a scenario to show how the family can remain undecided, when one member disappears after the interview.}
 
 
-\question{Using oral messages, the byzantine generals algorithm helps reach a consensus when less than one-third of the generals are traitors. However, it does not suggest how to identify the traitors. Examine if the traitors can be identified without any ambiguity if the number of traitors is known.}
+\question{Using oral messages in the context of generals reaching consensus on an attack where each $p_i$ initially has some $v_i \in \{0,1\}$, the BA algorithm helps reach a consensus when less than one-third of the generals are traitors (byzantine). However, it does not suggest how to identify the traitors. Examine if the traitors can be identified without any ambiguity if the number of traitors is known.}
 
 
 \end{document}
