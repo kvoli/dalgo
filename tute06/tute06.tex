@@ -73,28 +73,62 @@
 
 \question{How, if at all, should the definitions of integrity, agreement and validity for reliable multicast change for the case of open groups?}
 
-\question{Explain why reversing the order of the lines \begin{center}\textit{R-Deliver m} \\ \textit{if ($q \not = p$) then B-multicast(g,m) end if} \end{center} \\ as shown in this algorithm, would make the algorithm no longer satisfy uniform agreement. Does the reliable multicast algorithm based on IP multicast satisfy uniform agreement?}
+\question{Consider the following algorithm from the textbook: }
+
+\begin{center}
+    \includegraphics[scale=0.70]{algorithm.png}
+\end{center}
+
+
+Consider reversing the order of the lines:
+
+\begin{center}
+    \textit{if ($q \not = p$) then B-multicast(g,m) end if} \\
+    \textit{R-Deliver m} \\
+\end{center}
+
+
+\begin{enumerate}[(a)]
+    \item Why would this change make the algorithm no longer satisfy uniform agreement?
+    \item  Does the reliable multicast algorithm based on IP multicast satisfy uniform agreement?
+\end{enumerate}
+
+
 
 \question{Show that the FIFO-ordered multicast algorithm does not work for overlapping groups, by considering two messages sent from the same source to two overlapping groups, and considering a process in the intersection of those groups. Adapt the protocol to work for this case. Hint: processes should include with their messages the latest sequence numbers of messages sent to all groups.}
 
 \question{In a group, there are eight members, of which at most one can crash at any time.  You have no idea about which process can crash. The topology is a completely connected network.}
 
 \begin{enumerate}[(a)]
-    \item In the worst case, what is the samllest number of messages requireed to gaurantee reliable atomic multicast from a given process to the entire group?
+    \item In the worst case, what is the smallest number of messages required to guarantee reliable atomic multicast from a given process to the entire group?
     \item How does this change if up to four members can crash at any time?
 \end{enumerate}
 
+\pagebreak
 
-\question{Show that, if the basic multicast that we use in the algorithm of the attached figure is also FIFO-ordered, then the resultant totally-ordered multicast is also causally ordered. Is it the case that any multicast that is both FIFO-ordered and totally ordered is thereby causally ordered?}
+
+\question{Consider the following algorithm from the textbook: }
 
 \begin{center}
-    \includegraphics[scale=0.70]{multicast.png}
+    \includegraphics[scale=0.70]{multicast1.png}
 \end{center}
 
-\question{Consider a multiparty game of quiz involving five teams. \begin{quote} Each team poses a question and a member of another team has to answer it. The team that answers the question first scores a point. If no team can answer a question within 30 s, then no one scores any point. The clocks are synchronized, so who answered first is decided by the time when the reply was posted. The teams can pose questions at any time and in no particular order. \end{quote} What kind of multicast is appropriate here?  }
+\begin{enumerate}[(a)]
+    \item Show that, if the basic multicast that we use in the algorithm is also FIFO-ordered, then the resultant totally-ordered multicast is also causally ordered.
+    \item Is it the case that any multicast that is both FIFO-ordered and totally ordered is thereby causally ordered?
+\end{enumerate}
 
 
-\question{Consider an election in a state. The citizens cast their votes at the individual polling centers. At the end of the day when the poll closes, counting begins. Each count recorded at a center is multicast to all the other centers, so that all of them exactly know the latest count at any time when the counting is in progress. The interconnection topology of the network connecting the polling centers is a completely connected graph.*}
+
+\question{Consider a multiparty game of quiz involving five teams.}
+
+\begin{quote}
+    \textit{Each team poses a question and a member of another team has to answer it. The team that answers the question first scores a point. If no team can answer a question within 30s, then no one scores any point. The clocks are synchronized, so who answered first is decided by the time when the reply was posted. The teams can pose questions at any time and in no particular order.}
+\end{quote}
+
+What kind of multicast is appropriate here?
+
+\question{[EXTENSION] Consider an election in a state. The citizens cast their votes at the individual polling centers. At the end of the day when the poll closes, counting begins. Each count recorded at a center is multicast to all the other centers, so that all of them exactly know the latest count at any time when the counting is in progress. The interconnection topology of the network connecting the polling centers is a completely connected graph.}
 
 \begin{enumerate}[(a)]
     \item Assume that at any time failures can bring down some of the communication lines without creating a partition. What kind of multicast will guarantee that all centers are able to record every vote?
