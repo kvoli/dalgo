@@ -65,6 +65,9 @@
 
 \section*{Notes}
 
+
+\textbf{Strict executions of transactions:} Generally, it is required that transactions delay both their read and write operations so as to avoid both dirty reads and premature writes. The executions of transactions are called strict if the service delays both read and write operations on an object until all transactions that previously wrote that object have either committed or aborted. The strict execution of transactions enforces the desired property of isolation. [Coulouris pp.690]
+
 \section*{Exercises}
 
 \setcounter{question}{41}
