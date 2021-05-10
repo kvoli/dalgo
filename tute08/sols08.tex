@@ -1,0 +1,111 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 9: Transactions and Concurrency Control}
+    \bigskip \\
+\end{center}
+
+\section*{Solutions}
+
+\setcounter{question}{41}
+
+% Serial Equivalence
+% Conflicting Operation
+% Pessimistic concurrency control: two phase locking, read locking, read-write locks
+% Optimistic concurreny control: timestamp ordering, kung robinson
+% nested transactions
+\question{}
+
+
+\begin{enumerate}[(a)]
+    \item $x_T=read(j,T);y_T=read(i,T);x_U=read(k,U);write(j,44,T);write(i,33,T);commit(T);$ cont- $write(i,55,U);y_U=read(j,U);write(k,66,U);commit(U);$
+    \item $x_T=read(j,T);y_T=read(i,T);x_U=read(k,U);write(j,44,T);write(i,33,T);$ cont- $write(i,55,U);commit(T);y_U=read(j,U);write(k,66,U);commit(U);$
+    \item $x_T=read(j,T);x_U=read(k,U);write(i,55,U);y_T=read(i,T);y_U=read(j,U);$ cont- $write(k,66,U);commit(U);write(j,44,T);write(i,33,T);commit(T);$
+\end{enumerate}
+
+\bigskip
+
+\question{}
+
+
+\begin{enumerate}[(a)]
+    \item There are 24 possilbe interleavings of the nested transactions $T_1,T_2,U_1,U_2$ as every execution is serial (each transaction has a single op). There are 6 possible serially equivalent interleavings for the non-nested case.
+    \item Nested transactions allow more serially equivalent interleavings because: i) there is a larger number of serial executions ii) there is more potential for overlap between transactions iii) the scope of the effect of conflicting can be narrowed
+\end{enumerate}
+
+\bigskip
+
+\question{}
+
+\begin{enumerate}[(a)]
+    \item $a.withdraw(4,T_1);commit(T_1);c.withdraw(3,U_1);commit(U_1);\\b.deposit(4,T_2);commit(T_2);b.deposit(3,U_2);commit(U_2);$
+    \item $a.withdraw(4,T_1);commit(T_1);c.withdraw(3,U_1);commit(U_1);\\b.deposit(4,T_2);b.deposit(3,U_2);commit(T_2);commit(U_2);$
+    \item  Does not reduce concurrency between siblings T1,T2 or U1,U2 however it does affect families of transactions that have contending writes on the same object.
+\end{enumerate}
+
+\question{ (a) and (b) are serially equivalent. (c) and (d) are serially equivalent. Only (b) and (c) could occur under 2PL as (a) and (d) violate the release phase.  }
+
+\question{ Only the last transaction will commit. See excalidraw for more.  }
+
+
+
+
+\end{document}
