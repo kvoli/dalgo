@@ -1,0 +1,101 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 11: Transactions and Concurrency Control Continued.}
+    \bigskip \\
+\end{center}
+
+\section*{Notes}
+
+
+\section*{Exercises}
+
+\setcounter{question}{45}
+
+\question{For each of the following input schedules, will deadlocking occur if 2PL is used? Provide the locking schedule. Note that $R(x,T_1), W(x,5,T_2)$ represents a read in transaction 1 on object x and writing 5 into the object x in transaction 2 respectively.}
+
+\begin{enumerate}[(a)]
+    \item $R(x,T_1), W(y,9,T_2), W(x,4,T_2), W(y, 5, T_1)$
+    \item $W(y,9,T_2), R(x,T_1), W(x,8, T_1), R(y,T_2)$
+    \item $R(x,T_1),W(y,0,T_2), R(x,T_2), W(x,8, T_1)$
+\end{enumerate}
+
+
+\question{Consider a relaxation of two-phase locks in which read-only transactions can release read locks early.}
+
+\begin{enumerate}[(a)]
+    \item Would a read-only transaction have consistent retrievals?
+    \item Would the objects become inconsistent?
+\end{enumerate}
+
+\question{Under 2PL protocol it is possible for a transaction to "starve" in the following sense: A transaction gets involved in a deadlock, is chosen as the victim and aborted. After a restart, it again gets involved in a deadlock, is chosen as the victim and aborted, and so on. Provide a concrete example for such a situation, and describe how 2PL could be extended in order to avoid starvation of transactions.}
+
+\question{Can the scenario described in 48 occur when timestamp ordering is used? Provide a concrete example or show why not.}
+
+\question{Conservative or static 2PL (C2PL) is a variant of 2PL under which each transaction sets all locks that it needs in the beginning, before executing its first read or write steps. This is also known as preclaiming all necessary locks up front.}
+
+\begin{enumerate}[(a)]
+    \item Are deadlocks possible under this variant?
+    \item If the read and write sets (all read and write operations) are not known by the scheduler ahead of time, is C2PL possible? Explain.
+\end{enumerate}
+
+
+\end{document}
