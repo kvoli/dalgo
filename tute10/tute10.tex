@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{gastex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{pgfplotstable} % Generates table from .csvi
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{tgtermes} % times font
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+
+\pagestyle{empty}
+\textwidth      165mm
+\textheight     252mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin -2mm
+% \renewcommand{\baselinestretch}{0.96}
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\newcommand{\id}[1]{\mbox{\textit{#1}}}
+\newcommand{\tuple}[1]{\langle #1 \rangle}
+\newcommand{\ma}{\mathsf{a}}
+\newcommand{\mb}{\mathsf{b}}
+\newcommand{\mc}{\mathsf{c}}
+\newcommand{\md}{\mathsf{d}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\intg}{\mathbb{Z}}
+
+\newcounter{question}
+\newcommand{\question}[1]{
+    \stepcounter{question}
+    \thequestion. #1 \hfill
+}
+
+\newcommand{\revision}[1]{
+    \stepcounter{question}
+    \thequestion. #1* \hfill
+}
+
+
+
+\begin{document}
+\topskip0pt
+\begin{center}
+    {\sc The University of Melbourne
+        \\
+        School of Computing and Information Systems
+        \\
+    COMP90020 Distributed Algorithms}
+    \bigskip \\
+    {\Large\bf Tutorial Week 12: Distributed Transactions.}
+    \bigskip \\
+\end{center}
+
+\section*{Notes}
+
+\section*{Exercises}
+
+\setcounter{question}{50}
+
+\question{A three-phase commit protocol has the following parts:}
+
+
+\begin{itemize}
+    \item \textit{Phase 1:} Is the same as for two-phase commit.
+    \item \textit{Phase 2:} The coordinator collects the votes and makes a decision. If it is No, it aborts and informs participants that voted Yes; if the decision is Yes, it sends a preCommitrequest to all the participants. Participants that voted Yes wait for a preCommitor doAbortrequest. They acknowledge preCommitrequests and carry out doAbortrequests.
+    \item \textit{Phase 3:} The coordinator collects the acknowledgements. When all are received, it commits and sends doCommitrequests to the participants. Participants wait for a doCommitrequest. When it arrives, they commit.
+\end{itemize}
+
+Explain how this protocol avoids delay to participants during their ‘uncertain’ period due to the failure of the coordinator or other participants. Assume that communication does not fail.
+
+\question{Flat two phase commit is another 2PC protocol for nested transaction. In this approach, the coordinator of the top-level transaction sends canCommit?messages to the coordinators of all of the subtransactionsin the provisional commit list.  During the commit protocol, the participants refer to the transaction by its top-level TID. Each participant looks in its transaction list for any transaction or subtransactionmatching that TID. Does this provide sufficient information to enable correct actions by participants, such as the coordinator at server N that have a mix of provisionally committed and aborted subtransactions?}
+
+
+\question{Extend the definition of two-phase locking to apply to distributed transactions. Explain how this is ensured by distributed transactions using strict two-phase locking locally.}
+
+
+\question{In the edge chasing algorithm, every transaction involved in a deadlock cycle can cause deadlock detection to be initiated. The effect of several transactions in a cycle initiating deadlock detection is that detection may happen at several different servers in the cycle, with the result that more than one transaction in the cycle is aborted. Explain a possible solutionto this problem.}
+
+
+\end{document}
