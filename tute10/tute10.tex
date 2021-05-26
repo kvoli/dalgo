@@ -80,13 +80,22 @@
 
 Explain how this protocol avoids delay to participants during their ‘uncertain’ period due to the failure of the coordinator or other participants. Assume that communication does not fail.
 
-\question{Flat two phase commit is another 2PC protocol for nested transaction. In this approach, the coordinator of the top-level transaction sends canCommit?messages to the coordinators of all of the subtransactionsin the provisional commit list.  During the commit protocol, the participants refer to the transaction by its top-level TID. Each participant looks in its transaction list for any transaction or subtransactionmatching that TID. Does this provide sufficient information to enable correct actions by participants, such as the coordinator at server N that have a mix of provisionally committed and aborted subtransactions?}
-
+\question{Give an example of the interleavings of two trnasactions that is serially equivalent at each server but is not serially equivalent globally.}
 
 \question{Extend the definition of two-phase locking to apply to distributed transactions. Explain how this is ensured by distributed transactions using strict two-phase locking locally.}
 
 
-\question{In the edge chasing algorithm, every transaction involved in a deadlock cycle can cause deadlock detection to be initiated. The effect of several transactions in a cycle initiating deadlock detection is that detection may happen at several different servers in the cycle, with the result that more than one transaction in the cycle is aborted. Explain a possible solutionto this problem.}
+\question{In the edge chasing algorithm, every transaction involved in a deadlock cycle can cause deadlock detection to be initiated. The effect of several transactions in a cycle initiating deadlock detection is that detection may happen at several different servers in the cycle, with the result that more than one transaction in the cycle is aborted. Explain a possible solution to this problem.}
+
+\question{Consider a binary, perfectly balanced tree of processes of height $n$ where all leaf nodes have the same distance from the root; so there is a total number of $m= 2^n-1$ nodes in the tree. Assume that the root is the coordinator of the commit protocol. Determine the number of messages and forced log writes for the presumed nothing (2PC) protocol in the following situations, assuming that there is a heirarchic communication organization:}
+
+
+\begin{enumerate}[(a)]
+    \item all processes have performed updates and the transaction commits.
+    \item all processes have performed updates and the transaction aborts (root decides to abort after receiving 2 YES).
+    
+\end{enumerate}
+
 
 
 \end{document}
