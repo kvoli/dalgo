@@ -93,7 +93,9 @@ We present two local histories:
 \[s_2: r_2(y) w_1(x)\]
 
 
-There are serial local histories $t_1 <_{s_1} t_2$, $t_2 <_{s_2} t_1$. However there exists a cycle in the global conflict graph (not totally ordered). See directed $G = \{V,E\}, V = \{t_1,t_2\}, E = \{(t_1,t_2), (t_1,t_2)\}$. Here $t_1 \rightarrow t_2 \rightarrow t_1$ so it cannot be serializable.
+This leads to locally serial histories $t_1 <_{s_1} t_2$, $t_2 <_{s_2} t_1$. 
+
+Assume it is globally serial, so there must exist a total ordering $<$ on $T$ which implies $(t_1 <_{s_1} t_2 \land t_1 <_{s_2} t_2) \lor (t_2 <_{s_1} t_1 \land t_2 <_{s_2} t_1)$. Yet, $t_1 <_{s_1} t_2 \land t_2 <_{s_2} t_1$, therefore there cannot be a total ordering and as a result $s$ is not globally conflict serializable.
 
 \pagebreak
 \question{Two-phase locking in a distributed transaction requires that it cannot acquire a lock at any server after it has released a lock at any server.
