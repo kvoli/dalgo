@@ -56,6 +56,9 @@ books in bold, I would recommend referring to first.
 
 ### Extra Questions
 
-Questions I would have liked to include in the tutorials but were either too challenging (given the time constraints) or there were better options.
+```
+questions I would have liked to include in the tutorials but were either
+too challenging (given the time constraints) or there were better options.
+```
 
 [misc](https://github.com/kvoli/dalgo/blob/main/misc/misc.pdf)
