@@ -35,23 +35,23 @@ I claim no ownership for any content.
 books in bold, I would recommend referring to first.
 ```
 
-- Distributed Systems: Concepts and Design, 2011
+- [Distributed Systems: Concepts and Design, 2011](https://www.google.com.au/books/edition/Distributed_Systems/GmYpKQEACAAJ?hl=en)
     - ch 14,15,16,17
-- **Distributed Systems: An Algorithmic Approach, 2008**
+- [**Distributed Systems: An Algorithmic Approach, 2014**](https://www.google.com.au/books/edition/Distributed_Systems/60fSBQAAQBAJ?hl=en&gbpv=0)
     - ch 6,7,8,9,11,13,14,15,16
-- **Distributed Algorithms, 1996**
+- [**Distributed Algorithms, 1996**](https://www.google.com.au/books/edition/Distributed_Algorithms/2wsrLg-xBGgC?hl=en&gbpv=0)
     - ch 3, 4, 5, 6, 10, 12, 18, 19
-- **Notes on Theory of Distributed Systems, 2021** 
+- [**Notes on Theory of Distributed Systems, 2021**](http://cs-www.cs.yale.edu/homes/aspnes/classes/465/notes.pdf)
     - ch 5, 6, 8, 9, 10, 11, 12, 13
-- **Transactional Information Systems, 2002***
+- [**Transactional Information Systems, 2002***](https://www.google.com.au/books/edition/Transactional_Information_Systems/wV5Ran71zNoC?hl=en&gbpv=0)
     - ch 2, 3, 4, 5, 11, 18, 19
-- Distributed Algorithms for Message-Passing Systems, 2013*
+- [Distributed Algorithms for Message-Passing Systems, 2013*](https://www.google.com.au/books/edition/Distributed_Algorithms_for_Message_Passi/wdJEAAAAQBAJ?hl=en&gbpv=0)
     - ch 3, 4, 6, 7, 10, 11, 12, 14, 15
-- Distributed Algorithms, an Intuitive Approach, 2018
+- [Distributed Algorithms, an Intuitive Approach, 2018](https://www.google.com.au/books/edition/Distributed_Algorithms_second_edition/Z57uDwAAQBAJ?hl=en&gbpv=0)
     - ch 2, 3, 5, 9, 10, 11, 12, 13, 14, 16
-- Introduction to Distributed Algorithms, 2001
+- [Introduction to Distributed Algorithms, 2000](https://www.google.com.au/books/edition/Introduction_to_Distributed_Algorithms/vlpnS25qAJQC?hl=en&gbpv=0)
     - ch 2, 7, 9, 10, 12, 14, 15*
-- Distributed Computing Fundamentals, Simulations, and Advanced Topics, 2004*
+- [Distributed Computing Fundamentals, Simulations, and Advanced Topics, 2004*](https://www.google.com.au/books/edition/Distributed_Computing/3xfhhRjLUJEC?hl=en&gbpv=0)
     - ch 2, 3, 4, 5, 6, 8, 12, 13
 
 ### Extra Questions
