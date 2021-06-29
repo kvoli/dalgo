@@ -30,7 +30,7 @@ following books.
 
 I claim no ownership for any content.
 
-\*denotes exceeding subject scope or extension material
+*denotes exceeding subject scope or extension material
 
 books in bold, I would recommend referring to first.
 ```
