@@ -53,3 +53,9 @@ books in bold, I would recommend referring to first.
     - ch 2, 7, 9, 10, 12, 14, 15*
 - Distributed Computing Fundamentals, Simulations, and Advanced Topics, 2004*
     - ch 2, 3, 4, 5, 6, 8, 12, 13
+
+### Extra Questions
+
+Questions I would have liked to include in the tutorials but were either too challenging (given the time constraints) or there were better options.
+
+[misc](https://github.com/kvoli/dalgo/blob/main/misc/misc.pdf)
