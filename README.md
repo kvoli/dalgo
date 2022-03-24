@@ -5,6 +5,9 @@ comp90020 2021 sm1
 
 graduate cs subject on classical algorithms for distributed systems
 university of melbourne
+
+these materials were prepared by me for TA purposes and may be 
+arbitrarily out of date relative to current curriculum in comp90020
 ```
 
 ### Schedule
